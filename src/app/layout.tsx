@@ -106,6 +106,9 @@ export const metadata: Metadata = {
     shortcut: "/profile_logo.png",
     apple: "/profile_logo.png",
   },
+  verification: {
+    google: "WiN_o3sehcfc6Tyknz1aO23tXXV5f95_w7iIpR72Mbg",
+  },
 };
 
 const jsonLd = {
