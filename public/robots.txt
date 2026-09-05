@@ -1,0 +1,9 @@
+# Robots.txt for Jaydeep Prajapati Portfolio
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /api/*
+
+# Sitemap location
+Sitemap: https://jaydeep-prajapati.vercel.app/sitemap.xml

@@ -28,36 +28,66 @@ const slabo = Slabo_13px({
   weight: ["400"],
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://jaydeep-prajapati.vercel.app";
+
 export const metadata: Metadata = {
-  title: "Jaydeep Prajapati — Machine Learning & AI Systems Engineer",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Jaydeep Prajapati — AI/ML Systems & Edge Computer Vision Engineer",
+    template: "%s | Jaydeep Prajapati",
+  },
   description:
-    "Portfolio of Er. Jaydeep Prajapati. Architecting high-throughput neural models, autonomous LLM agent pipelines, edge computer vision, and low-latency distributed inference engines.",
+    "Portfolio of Jaydeep Prajapati (B.Tech CSE, Gyan Sagar College of Engineering). Specializing in local-first spatial vision (Trinetra), autonomous LangGraph agent pipelines, real-time model quantization, and full-stack AI web engineering.",
   keywords: [
     "Jaydeep Prajapati",
+    "Jaydeep Prajapati AI",
     "Machine Learning Engineer",
-    "AI Systems Architect",
-    "Computer Vision",
-    "TensorRT",
-    "LLM Agent Swarm",
+    "Computer Vision Engineer",
+    "Edge AI Developer",
+    "YOLOv8 Trinetra",
+    "Autonomous Agent Swarms",
+    "LangGraph Travel Planner",
     "PyTorch",
-    "FastAPI",
+    "Full Stack AI Developer",
     "Next.js 16",
-    "Deep Learning",
+    "Gyan Sagar College of Engineering",
+    "Kaggle AI Agents",
+    "Cyberpunk AI Portfolio",
   ],
-  authors: [{ name: "Jaydeep Prajapati", url: "https://www.linkedin.com/in/jaydeep-prajapati-a97988358/" }],
+  authors: [
+    {
+      name: "Jaydeep Prajapati",
+      url: "https://www.linkedin.com/in/jaydeep-prajapati-a97988358/",
+    },
+  ],
   creator: "Jaydeep Prajapati",
+  publisher: "Jaydeep Prajapati",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "Jaydeep Prajapati — Machine Learning & AI Systems Engineer",
+    title: "Jaydeep Prajapati — AI/ML Systems & Edge Computer Vision Engineer",
     description:
-      "Explore flagship AI systems, autonomous agent swarms, edge computer vision pipelines, and deep learning architectures.",
+      "Explore production AI systems, Trinetra spatial vision, autonomous LangGraph agent swarms, model quantization sandboxes, and applied deep learning.",
     url: "/",
-    siteName: "Jaydeep AI Engineering Portfolio",
+    siteName: "Jaydeep Prajapati Portfolio",
     images: [
       {
-        url: "/image copy.png",
+        url: "/profile_logo.png",
         width: 1200,
         height: 630,
-        alt: "Jaydeep Prajapati — AI Systems Engineer",
+        alt: "Jaydeep Prajapati — AI/ML Systems Engineer",
       },
     ],
     locale: "en_US",
@@ -65,17 +95,63 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jaydeep Prajapati — Machine Learning & AI Systems Engineer",
+    title: "Jaydeep Prajapati — AI/ML Systems & Edge Computer Vision Engineer",
     description:
-      "Explore flagship AI systems, autonomous agent swarms, edge computer vision pipelines, and deep learning architectures.",
-    images: ["/image copy.png"],
+      "Explore production AI systems, Trinetra spatial vision, autonomous LangGraph agent swarms, model quantization sandboxes, and applied deep learning.",
+    images: ["/profile_logo.png"],
     creator: "@ai.by.jaydeep",
   },
   icons: {
-    icon: "/image copy.png",
-    shortcut: "/image copy.png",
-    apple: "/image copy.png",
+    icon: "/profile_logo.png",
+    shortcut: "/profile_logo.png",
+    apple: "/profile_logo.png",
   },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${siteUrl}/#person`,
+      name: "Jaydeep Prajapati",
+      jobTitle: "AI/ML Systems & Computer Vision Engineer",
+      url: siteUrl,
+      image: `${siteUrl}/profile_logo.png`,
+      sameAs: [
+        "https://github.com/jay-123-oss",
+        "https://www.linkedin.com/in/jaydeep-prajapati-a97988358/",
+        "https://www.instagram.com/ai.by.jaydeep/?hl=en",
+        "https://www.kaggle.com/jaydeepprajapatik",
+      ],
+      alumniOf: {
+        "@type": "CollegeOrUniversity",
+        name: "Gyan Sagar College of Engineering",
+      },
+      knowsAbout: [
+        "Artificial Intelligence",
+        "Computer Vision",
+        "YOLO Object Detection",
+        "Edge AI Inference",
+        "Autonomous Agent Swarms",
+        "LangGraph",
+        "PyTorch",
+        "Next.js",
+        "Full-Stack Web Development",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      url: siteUrl,
+      name: "Jaydeep Prajapati — AI/ML Systems Portfolio",
+      description:
+        "Official engineering portfolio of Jaydeep Prajapati, featuring interactive AI sandboxes, real-time model quantization, and verified technical projects.",
+      publisher: {
+        "@id": `${siteUrl}/#person`,
+      },
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -89,6 +165,12 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${chakraPetch.variable} ${silkscreen.variable} ${inter.variable} ${slabo.variable} h-full`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body suppressHydrationWarning className="min-h-full antialiased selection:bg-cyan-500 selection:text-black">
         <ThemeProvider>
           {children}
