@@ -33,26 +33,25 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://jaydeepprajapati.ve
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Jaydeep Prajapati — AI/ML Systems & Edge Computer Vision Engineer",
+    default: "Jaydeep Prajapati — AI/ML & Software Engineer Portfolio",
     template: "%s | Jaydeep Prajapati",
   },
   description:
-    "Portfolio of Jaydeep Prajapati (B.Tech CSE, Gyan Sagar College of Engineering). Specializing in local-first spatial vision (Trinetra), autonomous LangGraph agent pipelines, real-time model quantization, and full-stack AI web engineering.",
+    "Portfolio of Jaydeep Prajapati, an AI/ML and Software Engineer specializing in local-first computer vision (Trinetra), autonomous LangGraph agent pipelines, and high-performance full-stack web applications.",
   keywords: [
     "Jaydeep Prajapati",
     "Jaydeep Prajapati AI",
+    "Jaydeep Prajapati Software Engineer",
     "Machine Learning Engineer",
     "Computer Vision Engineer",
+    "Software Engineer",
     "Edge AI Developer",
-    "YOLOv8 Trinetra",
-    "Autonomous Agent Swarms",
-    "LangGraph Travel Planner",
+    "Trinetra Vision",
+    "LangGraph Autonomous Agents",
     "PyTorch",
-    "Full Stack AI Developer",
     "Next.js 16",
     "Gyan Sagar College of Engineering",
     "Kaggle AI Agents",
-    "Cyberpunk AI Portfolio",
   ],
   authors: [
     {
@@ -74,20 +73,20 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "/",
+    canonical: "https://jaydeepprajapati.vercel.app/",
   },
   openGraph: {
-    title: "Jaydeep Prajapati — AI/ML Systems & Edge Computer Vision Engineer",
+    title: "Jaydeep Prajapati — AI/ML & Software Engineer Portfolio",
     description:
-      "Explore production AI systems, Trinetra spatial vision, autonomous LangGraph agent swarms, model quantization sandboxes, and applied deep learning.",
-    url: "/",
-    siteName: "Jaydeep Prajapati Portfolio",
+      "Official portfolio of Jaydeep Prajapati. Exploring spatial computer vision (Trinetra), autonomous LangGraph agents, and modern software engineering.",
+    url: "https://jaydeepprajapati.vercel.app/",
+    siteName: "Jaydeep Prajapati",
     images: [
       {
         url: "/profile_logo.png",
         width: 1200,
         height: 630,
-        alt: "Jaydeep Prajapati — AI/ML Systems Engineer",
+        alt: "Jaydeep Prajapati — AI/ML & Software Engineer",
       },
     ],
     locale: "en_US",
@@ -95,9 +94,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jaydeep Prajapati — AI/ML Systems & Edge Computer Vision Engineer",
+    title: "Jaydeep Prajapati — AI/ML & Software Engineer Portfolio",
     description:
-      "Explore production AI systems, Trinetra spatial vision, autonomous LangGraph agent swarms, model quantization sandboxes, and applied deep learning.",
+      "Official portfolio of Jaydeep Prajapati. Exploring spatial computer vision (Trinetra), autonomous LangGraph agents, and modern software engineering.",
     images: ["/profile_logo.png"],
     creator: "@ai.by.jaydeep",
   },
@@ -116,11 +115,13 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "Person",
-      "@id": `${siteUrl}/#person`,
+      "@id": "https://jaydeepprajapati.vercel.app/#person",
       name: "Jaydeep Prajapati",
-      jobTitle: "AI/ML Systems & Computer Vision Engineer",
-      url: siteUrl,
-      image: `${siteUrl}/profile_logo.png`,
+      givenName: "Jaydeep",
+      familyName: "Prajapati",
+      jobTitle: "AI/ML & Software Engineer",
+      url: "https://jaydeepprajapati.vercel.app/",
+      image: "https://jaydeepprajapati.vercel.app/profile_logo.png",
       sameAs: [
         "https://github.com/jay-123-oss",
         "https://www.linkedin.com/in/jaydeep-prajapati-a97988358/",
@@ -131,27 +132,31 @@ const jsonLd = {
         "@type": "CollegeOrUniversity",
         name: "Gyan Sagar College of Engineering",
       },
+      description:
+        "Jaydeep Prajapati is an AI/ML and Software Engineer specializing in local-first computer vision, autonomous agent architectures, and full-stack software development.",
       knowsAbout: [
-        "Artificial Intelligence",
         "Computer Vision",
+        "Machine Learning",
+        "Artificial Intelligence",
+        "Software Engineering",
         "YOLO Object Detection",
         "Edge AI Inference",
         "Autonomous Agent Swarms",
         "LangGraph",
         "PyTorch",
         "Next.js",
-        "Full-Stack Web Development",
+        "FastAPI",
       ],
     },
     {
       "@type": "WebSite",
-      "@id": `${siteUrl}/#website`,
-      url: siteUrl,
-      name: "Jaydeep Prajapati — AI/ML Systems Portfolio",
+      "@id": "https://jaydeepprajapati.vercel.app/#website",
+      url: "https://jaydeepprajapati.vercel.app/",
+      name: "Jaydeep Prajapati — AI/ML & Software Engineer Portfolio",
       description:
-        "Official engineering portfolio of Jaydeep Prajapati, featuring interactive AI sandboxes, real-time model quantization, and verified technical projects.",
+        "Official engineering portfolio of Jaydeep Prajapati, featuring interactive AI sandboxes, real-time model quantization, and verified software projects.",
       publisher: {
-        "@id": `${siteUrl}/#person`,
+        "@id": "https://jaydeepprajapati.vercel.app/#person",
       },
     },
   ],
