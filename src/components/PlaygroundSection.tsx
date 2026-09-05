@@ -367,7 +367,7 @@ export default function PlaygroundSection() {
                 </div>
 
                 <div
-                  className="font-chakra"
+                  className="font-chakra card-heading"
                   style={{
                     fontSize: "1.1rem",
                     fontWeight: 700,

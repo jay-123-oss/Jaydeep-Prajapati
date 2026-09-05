@@ -2,6 +2,9 @@
 
 import React, { useState } from "react";
 import { WaspButton } from "@/components/ui/wasp-button";
+import SkillRadarChart from "@/components/SkillRadarChart";
+import MusicPlayerWidget from "@/components/MusicPlayerWidget";
+import HangingAdminLamp from "@/components/HangingAdminLamp";
 
 interface SkillItem {
   id: string;
@@ -11,6 +14,7 @@ interface SkillItem {
   code: string;
   tagline: string;
   tags: string[];
+  imageUrl: string;
 }
 
 const SKILLS_DATA: SkillItem[] = [
@@ -23,6 +27,7 @@ const SKILLS_DATA: SkillItem[] = [
     code: "UI-01 // CORE",
     tagline: "Server Components, streaming SSR, App Router architecture.",
     tags: ["React 19", "Server Actions", "Turbopack", "Hydration"],
+    imageUrl: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&auto=format&fit=crop&q=80",
   },
   {
     id: "typescript",
@@ -32,6 +37,7 @@ const SKILLS_DATA: SkillItem[] = [
     code: "TS-02 // TYPE",
     tagline: "Generic inference, AST transforms, strict null safety.",
     tags: ["Generics", "Type Guards", "Utility Types", "AST"],
+    imageUrl: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=80",
   },
   {
     id: "tailwind",
@@ -41,6 +47,7 @@ const SKILLS_DATA: SkillItem[] = [
     code: "CSS-03 // STYLE",
     tagline: "Dynamic token systems, high-performance CSS animations.",
     tags: ["Tailwind v4", "CSS Variables", "Responsive", "Tokens"],
+    imageUrl: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&auto=format&fit=crop&q=80",
   },
   {
     id: "framer",
@@ -50,6 +57,7 @@ const SKILLS_DATA: SkillItem[] = [
     code: "ANIM-04 // FX",
     tagline: "Layout orchestration, springs, gesture-driven HUD components.",
     tags: ["Layout Animations", "Gestures", "Springs", "SVG Paths"],
+    imageUrl: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&auto=format&fit=crop&q=80",
   },
 
   // ── AI & Intelligence ──
@@ -61,6 +69,7 @@ const SKILLS_DATA: SkillItem[] = [
     code: "AI-01 // TENSOR",
     tagline: "Transformer backbones, custom CUDA ops, distributed training.",
     tags: ["TorchDynamo", "CUDA", "Multi-GPU", "FlashAttention"],
+    imageUrl: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&auto=format&fit=crop&q=80",
   },
   {
     id: "vllm",
@@ -70,6 +79,7 @@ const SKILLS_DATA: SkillItem[] = [
     code: "AI-02 // SERVE",
     tagline: "PagedAttention, continuous batching, AWQ/GGUF quantization.",
     tags: ["Continuous Batching", "PagedAttention", "AWQ", "Triton"],
+    imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&auto=format&fit=crop&q=80",
   },
   {
     id: "langchain",
@@ -79,6 +89,7 @@ const SKILLS_DATA: SkillItem[] = [
     code: "AI-03 // AGENT",
     tagline: "Hierarchical agent DAGs, semantic routing, tool reflection.",
     tags: ["Agent Swarms", "Tool Calling", "Reflection", "DAGs"],
+    imageUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80",
   },
   {
     id: "tensorrt",
@@ -88,6 +99,7 @@ const SKILLS_DATA: SkillItem[] = [
     code: "AI-04 // VISION",
     tagline: "Zero-shot YOLO segmentation, ONNX runtime, Jetson deployment.",
     tags: ["YOLOv10", "SAM", "ONNX", "Edge AI"],
+    imageUrl: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&auto=format&fit=crop&q=80",
   },
 
   // ── Backend & Data ──
@@ -99,6 +111,7 @@ const SKILLS_DATA: SkillItem[] = [
     code: "API-01 // ASYNC",
     tagline: "High-throughput asynchronous microservices, gRPC streaming.",
     tags: ["AsyncIO", "Pydantic v2", "gRPC", "WebSockets"],
+    imageUrl: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800&auto=format&fit=crop&q=80",
   },
   {
     id: "pgvector",
@@ -108,6 +121,7 @@ const SKILLS_DATA: SkillItem[] = [
     code: "DATA-02 // VEC",
     tagline: "Hybrid dense-sparse indexing, cross-encoder re-ranking.",
     tags: ["HNSW", "Cosine Indexing", "ColBERT", "Hybrid RAG"],
+    imageUrl: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800&auto=format&fit=crop&q=80",
   },
   {
     id: "redis",
@@ -117,6 +131,7 @@ const SKILLS_DATA: SkillItem[] = [
     code: "DATA-03 // CACHE",
     tagline: "High-speed token buffer, Pub/Sub message broker.",
     tags: ["Semantic Caching", "Pub/Sub", "In-Memory", "Low Latency"],
+    imageUrl: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&auto=format&fit=crop&q=80",
   },
 
   // ── DevOps & Cloud ──
@@ -128,6 +143,7 @@ const SKILLS_DATA: SkillItem[] = [
     code: "OPS-01 // CLOUD",
     tagline: "Multi-node GPU orchestration, auto-scaling, Helm charts.",
     tags: ["K8s", "GPU Operators", "Helm", "Multi-Cloud"],
+    imageUrl: "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800&auto=format&fit=crop&q=80",
   },
 ];
 
@@ -159,7 +175,7 @@ export default function SkillsSection() {
         color: "var(--text-primary)",
         position: "relative",
         overflow: "hidden",
-        padding: "100px 56px 120px 56px",
+        padding: "clamp(60px, 8vw, 100px) clamp(16px, 4vw, 56px) clamp(70px, 9vw, 120px)",
         userSelect: "none",
         transition: "background-color 0.3s ease, color 0.3s ease",
       }}
@@ -227,13 +243,97 @@ export default function SkillsSection() {
       >
         {/* ── Section Header ── */}
         <div style={{ marginBottom: "48px" }}>
-          {/* Status Tag */}
+          {/* Profile Logo & Identity Header - Just Above Technical Arsenal */}
           <div
             style={{
               display: "inline-flex",
               alignItems: "center",
+              gap: "18px",
+              marginBottom: "16px",
+              padding: "10px 24px 10px 12px",
+              backgroundColor: "rgba(128, 128, 128, 0.06)",
+              backdropFilter: "blur(12px)",
+              border: "1px solid var(--border-subtle)",
+              borderRadius: "50px",
+              boxShadow: "0 8px 30px rgba(0,0,0,0.25)",
+            }}
+          >
+            {/* Left: Circular Logo Avatar with Sci-Fi Glowing Ring */}
+            <div
+              style={{
+                position: "relative",
+                width: "60px",
+                height: "60px",
+                borderRadius: "50%",
+                padding: "2px",
+                background: "linear-gradient(135deg, #0284C7, #38BDF8, #6366F1)",
+                boxShadow: "0 0 16px rgba(56, 189, 248, 0.4)",
+                flexShrink: 0,
+              }}
+            >
+              <div
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: "50%",
+                  overflow: "hidden",
+                  backgroundColor: "#ffffff",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <img
+                  src="/profile_logo.png"
+                  alt="Jaydeep Prajapati"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    objectPosition: "center 15%",
+                    transform: "scale(1.25)",
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Right: Name & Role */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+              <div
+                className="font-chakra"
+                style={{
+                  fontSize: "1.25rem",
+                  fontWeight: 800,
+                  letterSpacing: "0.04em",
+                  color: "var(--text-primary)",
+                  textTransform: "uppercase",
+                  lineHeight: 1.15,
+                }}
+              >
+                Jaydeep Prajapati
+              </div>
+              <div
+                className="font-pixel"
+                style={{
+                  fontSize: "10px",
+                  color: "#38BDF8",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  fontWeight: 600,
+                }}
+              >
+                AI Developer &amp; Researcher
+              </div>
+            </div>
+          </div>
+
+          {/* Status Tag */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
               gap: "8px",
-              marginBottom: "14px",
+              marginBottom: "12px",
             }}
           >
             <span
@@ -265,7 +365,7 @@ export default function SkillsSection() {
               display: "flex",
               flexDirection: "row",
               justifyContent: "space-between",
-              alignItems: "flex-end",
+              alignItems: "center",
               flexWrap: "wrap",
               gap: "24px",
             }}
@@ -290,18 +390,19 @@ export default function SkillsSection() {
               </h2>
             </div>
 
-            <p
+            {/* ── MUSIC BOX (Shifted slightly downward as requested) ── */}
+            <div
               style={{
-                color: "var(--text-muted)",
-                fontSize: "0.95rem",
-                lineHeight: 1.6,
-                maxWidth: "420px",
-                margin: 0,
+                position: "relative",
+                display: "inline-flex",
+                marginTop: "24px", // Music box shifted slightly down
+                maxWidth: "100%",
+                width: "min(370px, 100%)",
               }}
             >
-              Battle-tested toolchain spanning distributed deep learning,
-              multi-modal inference optimization, and modern reactive interfaces.
-            </p>
+              <HangingAdminLamp />
+              <MusicPlayerWidget />
+            </div>
           </div>
 
           {/* ── Filter Tabs (Wasp Sci-Fi Buttons) ── */}
@@ -338,25 +439,24 @@ export default function SkillsSection() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 270px), 1fr))",
             gap: "20px",
           }}
         >
           {filteredSkills.map((skill) => (
             <div
               key={skill.id}
+              data-cursor="skill"
               style={{
                 position: "relative",
                 backgroundColor: "var(--bg-card)",
                 backdropFilter: "blur(12px)",
                 border: "1px solid var(--border-subtle)",
-                padding: "24px 28px",
                 clipPath:
                   "polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px)",
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "space-between",
-                minHeight: "190px",
+                overflow: "hidden",
                 boxShadow: "0 10px 30px -10px rgba(0,0,0,0.5)",
                 transition: "all 0.2s ease",
               }}
@@ -369,90 +469,129 @@ export default function SkillsSection() {
                 e.currentTarget.style.transform = "translateY(0)";
               }}
             >
-              {/* Corner Bracket Accents */}
+              {/* Top Half: Topic Related Image */}
               <div
                 style={{
-                  position: "absolute",
-                  top: "6px",
-                  left: "14px",
-                  width: "8px",
-                  height: "8px",
-                  borderTop: "1.5px solid var(--border-active)",
-                  borderLeft: "1.5px solid var(--border-active)",
-                  pointerEvents: "none",
+                  position: "relative",
+                  width: "100%",
+                  height: "160px",
+                  overflow: "hidden",
+                  backgroundColor: "rgba(0, 0, 0, 0.4)",
                 }}
-              />
-              <div
-                style={{
-                  position: "absolute",
-                  top: "6px",
-                  right: "6px",
-                  width: "8px",
-                  height: "8px",
-                  borderTop: "1.5px solid var(--border-active)",
-                  borderRight: "1.5px solid var(--border-active)",
-                  pointerEvents: "none",
-                }}
-              />
-
-              {/* Card Header: Code & Mastery Level */}
-              <div>
+              >
+                <img
+                  src={skill.imageUrl}
+                  alt={skill.name}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block",
+                  }}
+                />
                 <div
                   style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginBottom: "8px",
+                    position: "absolute",
+                    inset: 0,
+                    background:
+                      "linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.3) 50%, var(--bg-card) 100%)",
+                    pointerEvents: "none",
                   }}
-                >
-                  <span
-                    className="font-pixel"
-                    style={{
-                      fontSize: "10px",
-                      color: "var(--text-muted)",
-                      letterSpacing: "0.1em",
-                    }}
-                  >
-                    {skill.code}
-                  </span>
-                  <span
-                    className="font-chakra"
-                    style={{
-                      fontSize: "13px",
-                      fontWeight: 700,
-                      color: "#38BDF8",
-                    }}
-                  >
-                    {skill.level}%
-                  </span>
-                </div>
-
-                {/* Skill Name */}
-                <h3
-                  className="font-chakra"
+                />
+                {/* Corner Bracket Accents */}
+                <div
                   style={{
-                    fontSize: "1.25rem",
-                    fontWeight: 700,
-                    color: "var(--text-primary)",
-                    letterSpacing: "-0.01em",
-                    margin: "0 0 6px 0",
+                    position: "absolute",
+                    top: "6px",
+                    left: "14px",
+                    width: "8px",
+                    height: "8px",
+                    borderTop: "1.5px solid var(--border-active)",
+                    borderLeft: "1.5px solid var(--border-active)",
+                    pointerEvents: "none",
                   }}
-                >
-                  {skill.name}
-                </h3>
-
-                {/* Tagline */}
-                <p
+                />
+                <div
                   style={{
-                    fontSize: "0.85rem",
-                    color: "var(--text-secondary)",
-                    lineHeight: 1.4,
-                    margin: "0 0 16px 0",
+                    position: "absolute",
+                    top: "6px",
+                    right: "6px",
+                    width: "8px",
+                    height: "8px",
+                    borderTop: "1.5px solid var(--border-active)",
+                    borderRight: "1.5px solid var(--border-active)",
+                    pointerEvents: "none",
                   }}
-                >
-                  {skill.tagline}
-                </p>
+                />
               </div>
+
+              {/* Bottom Half: Content */}
+              <div
+                style={{
+                  padding: "20px 24px 24px 24px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  flex: 1,
+                }}
+              >
+                <div>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    <span
+                      className="font-pixel"
+                      style={{
+                        fontSize: "10px",
+                        color: "var(--text-muted)",
+                        letterSpacing: "0.1em",
+                      }}
+                    >
+                      {skill.code}
+                    </span>
+                    <span
+                      className="font-chakra"
+                      style={{
+                        fontSize: "13px",
+                        fontWeight: 700,
+                        color: "#38BDF8",
+                      }}
+                    >
+                      {skill.level}%
+                    </span>
+                  </div>
+
+                  {/* Skill Name */}
+                  <h3
+                    className="font-chakra card-heading"
+                    style={{
+                      fontSize: "1.25rem",
+                      fontWeight: 700,
+                      color: "var(--text-primary)",
+                      letterSpacing: "-0.01em",
+                      margin: "0 0 6px 0",
+                    }}
+                  >
+                    {skill.name}
+                  </h3>
+
+                  {/* Tagline */}
+                  <p
+                    style={{
+                      fontSize: "0.85rem",
+                      color: "var(--text-secondary)",
+                      lineHeight: 1.4,
+                      margin: "0 0 16px 0",
+                    }}
+                  >
+                    {skill.tagline}
+                  </p>
+                </div>
 
               {/* Card Footer: Progress Bar + Tags */}
               <div>
@@ -506,8 +645,12 @@ export default function SkillsSection() {
                 </div>
               </div>
             </div>
+          </div>
           ))}
         </div>
+
+        {/* ── Interactive Holographic Skill Matrix & Vector Radar ── */}
+        <SkillRadarChart />
       </div>
     </section>
   );

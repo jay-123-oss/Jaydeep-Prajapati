@@ -5,11 +5,49 @@ import { useTheme } from "@/context/ThemeContext";
 
 export default function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const isDark = theme === "dark";
+
+  if (!mounted) {
+    return (
+      <button
+        type="button"
+        suppressHydrationWarning
+        aria-label="Toggle theme"
+        className="font-pixel"
+        style={{
+          position: "relative",
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "8px",
+          padding: "8px 14px",
+          backgroundColor: "rgba(255, 255, 255, 0.06)",
+          color: "#ffffff",
+          border: "1px solid rgba(255, 255, 255, 0.18)",
+          clipPath:
+            "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+          cursor: "pointer",
+          fontSize: "11px",
+          letterSpacing: "0.08em",
+          outline: "none",
+          userSelect: "none",
+        }}
+      >
+        <span style={{ color: "#FBBF24", display: "inline-flex", fontSize: "13px" }}>☀</span>
+        <span>LIGHT</span>
+      </button>
+    );
+  }
 
   return (
     <button
       type="button"
+      suppressHydrationWarning
       onClick={toggleTheme}
       aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
       title={`Switch to ${isDark ? "light" : "dark"} mode`}

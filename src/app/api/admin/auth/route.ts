@@ -1,18 +1,31 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { checkRateLimit, getClientIp, timingSafeCompare } from "@/lib/security";
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "jaydeeprand123";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "jay@123";
 
 export async function POST(req: Request) {
   try {
-    const { password } = await req.json();
+    const clientIp = getClientIp(req);
+    // Max 5 attempts per 15 minutes per IP
+    const rateCheck = checkRateLimit(`admin-auth:${clientIp}`, 5, 15 * 60 * 1000);
 
-    if (password === ADMIN_PASSWORD) {
+    if (!rateCheck.allowed) {
+      return NextResponse.json(
+        { error: `Too many failed admin authentication attempts. Locked out for ${rateCheck.resetInSec}s.` },
+        { status: 429 }
+      );
+    }
+
+    const body = await req.json();
+    const password = typeof body?.password === "string" ? body.password : "";
+
+    if (timingSafeCompare(password, ADMIN_PASSWORD)) {
       const cookieStore = await cookies();
       cookieStore.set("admin_session", "authenticated", {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
+        sameSite: "strict",
         path: "/",
         maxAge: 60 * 60 * 24 * 7, // 7 days
       });
@@ -20,9 +33,12 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: true });
     }
 
-    return NextResponse.json({ error: "Invalid admin password" }, { status: 401 });
+    return NextResponse.json(
+      { error: "Invalid admin password. Attempt recorded.", remainingAttempts: rateCheck.remaining },
+      { status: 401 }
+    );
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: "Authentication system error" }, { status: 500 });
   }
 }
 

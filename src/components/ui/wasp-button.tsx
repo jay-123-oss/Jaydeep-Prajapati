@@ -65,6 +65,7 @@ export function WaspButton({
 
   return (
     <a
+      suppressHydrationWarning
       ref={containerRef}
       {...props}
       onMouseEnter={(e) => {

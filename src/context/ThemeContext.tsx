@@ -10,24 +10,24 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  theme: "dark",
+  theme: "light",
   toggleTheme: () => {},
 });
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark");
+  const [theme, setTheme] = useState<Theme>("light");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    const savedTheme = (localStorage.getItem("jaydeep_theme") as Theme) || "dark";
+    const savedTheme = (localStorage.getItem("jaydeep_theme") as Theme) || "light";
     setTheme(savedTheme);
-    if (savedTheme === "light") {
-      document.documentElement.classList.add("light");
-      document.documentElement.classList.remove("dark");
-    } else {
+    if (savedTheme === "dark") {
       document.documentElement.classList.add("dark");
       document.documentElement.classList.remove("light");
+    } else {
+      document.documentElement.classList.add("light");
+      document.documentElement.classList.remove("dark");
     }
   }, []);
 

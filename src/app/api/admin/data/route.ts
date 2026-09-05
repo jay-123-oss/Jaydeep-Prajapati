@@ -23,6 +23,7 @@ export async function GET() {
     const projects = await sql`SELECT * FROM projects ORDER BY sort_order ASC, updated_at DESC`;
     const experiences = await sql`SELECT * FROM experiences ORDER BY sort_order ASC, updated_at DESC`;
     const inquiries = await sql`SELECT * FROM inquiries ORDER BY created_at DESC LIMIT 50`;
+    const social_profiles = await sql`SELECT * FROM social_profiles ORDER BY id ASC`;
 
     return NextResponse.json({
       config: config[0] || null,
@@ -30,6 +31,7 @@ export async function GET() {
       projects,
       experiences,
       inquiries,
+      social_profiles,
     });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -140,11 +142,20 @@ export async function POST(req: Request) {
         ? data.tags.split(",").map((t: string) => t.trim()).filter(Boolean)
         : [];
       const metricsArray = Array.isArray(data.metrics) ? data.metrics : [];
+      const imagesArray = Array.isArray(data.images)
+        ? data.images
+        : typeof data.images === "string"
+        ? data.images
+            .split(/[\n,]+/)
+            .map((img: string) => img.trim())
+            .filter(Boolean)
+        : [];
 
       await sql`
         INSERT INTO projects (
           id, title, codename, category, tagline, description,
-          architecture, metrics, tags, github_url, live_url, featured, sort_order, updated_at
+          architecture, metrics, tags, github_url, live_url, featured,
+          video_url, images, linkedin_url, users_count, sort_order, updated_at
         ) VALUES (
           ${projId},
           ${data.title},
@@ -158,6 +169,10 @@ export async function POST(req: Request) {
           ${data.github_url || null},
           ${data.live_url || null},
           ${data.featured || false},
+          ${data.video_url || null},
+          ${JSON.stringify(imagesArray)},
+          ${data.linkedin_url || null},
+          ${data.users_count || null},
           ${parseInt(data.sort_order) || 0},
           NOW()
         )
@@ -173,6 +188,10 @@ export async function POST(req: Request) {
           github_url = EXCLUDED.github_url,
           live_url = EXCLUDED.live_url,
           featured = EXCLUDED.featured,
+          video_url = EXCLUDED.video_url,
+          images = EXCLUDED.images,
+          linkedin_url = EXCLUDED.linkedin_url,
+          users_count = EXCLUDED.users_count,
           sort_order = EXCLUDED.sort_order,
           updated_at = NOW();
       `;
@@ -231,6 +250,69 @@ export async function POST(req: Request) {
 
     if (action === "delete_experience") {
       await sql`DELETE FROM experiences WHERE id = ${id}`;
+      return NextResponse.json({ success: true });
+    }
+
+    if (action === "upsert_social_profile") {
+      const bioLinesArray = Array.isArray(data.bio_lines)
+        ? data.bio_lines
+        : typeof data.bio_lines === "string"
+        ? data.bio_lines.split("\n").map((t: string) => t.trim()).filter(Boolean)
+        : [];
+      const highlightsArray = Array.isArray(data.highlights)
+        ? data.highlights
+        : typeof data.highlights === "string"
+        ? JSON.parse(data.highlights)
+        : [];
+
+      await sql`
+        INSERT INTO social_profiles (
+          id, platform, username, display_name, verified, category,
+          profile_pic, thought_bubble, bio_lines, external_link,
+          threads_handle, music_track, posts_count, followers_count,
+          following_count, views_30days, highlights, empty_title, empty_subtitle, updated_at
+        ) VALUES (
+          ${data.id},
+          ${data.platform || data.id},
+          ${data.username},
+          ${data.display_name},
+          ${data.verified ?? true},
+          ${data.category || "Digital creator"},
+          ${data.profile_pic || "/profile_logo.png"},
+          ${data.thought_bubble || "Make this space yours..."},
+          ${JSON.stringify(bioLinesArray)},
+          ${data.external_link || ""},
+          ${data.threads_handle || ""},
+          ${data.music_track || ""},
+          ${String(data.posts_count ?? "0")},
+          ${String(data.followers_count ?? "0")},
+          ${String(data.following_count ?? "0")},
+          ${data.views_30days || ""},
+          ${JSON.stringify(highlightsArray)},
+          ${data.empty_title || "Create your first post"},
+          ${data.empty_subtitle || "Make this space your own."},
+          NOW()
+        )
+        ON CONFLICT (id) DO UPDATE SET
+          username = EXCLUDED.username,
+          display_name = EXCLUDED.display_name,
+          verified = EXCLUDED.verified,
+          category = EXCLUDED.category,
+          profile_pic = EXCLUDED.profile_pic,
+          thought_bubble = EXCLUDED.thought_bubble,
+          bio_lines = EXCLUDED.bio_lines,
+          external_link = EXCLUDED.external_link,
+          threads_handle = EXCLUDED.threads_handle,
+          music_track = EXCLUDED.music_track,
+          posts_count = EXCLUDED.posts_count,
+          followers_count = EXCLUDED.followers_count,
+          following_count = EXCLUDED.following_count,
+          views_30days = EXCLUDED.views_30days,
+          highlights = EXCLUDED.highlights,
+          empty_title = EXCLUDED.empty_title,
+          empty_subtitle = EXCLUDED.empty_subtitle,
+          updated_at = NOW();
+      `;
       return NextResponse.json({ success: true });
     }
 

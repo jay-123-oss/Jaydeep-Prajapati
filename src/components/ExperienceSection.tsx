@@ -17,70 +17,89 @@ interface ExperienceItem {
 
 const EXPERIENCES: ExperienceItem[] = [
   {
-    id: "lead-ai-eng",
-    role: "Staff / Lead Machine Learning Engineer",
-    company: "Autonomous Systems & AI Labs",
-    location: "Vancouver, BC / Remote",
-    period: "2024 — PRESENT",
-    badge: "ACTIVE DEPLOYMENT",
+    id: "intern-saiket",
+    role: "Front-End Development Intern",
+    company: "Saiket Systems",
+    location: "Virtual / Remote",
+    period: "2026",
+    badge: "INDUSTRY INTERNSHIP",
     overview:
-      "Spearheading the engineering of multi-modal agentic systems, model distillation pipelines, and real-time distributed inference infrastructure.",
+      "Completed hands-on software development internship, successfully delivering assigned technical front-end projects, reactive user interfaces, and API-driven interfaces.",
     achievements: [
-      "Engineered an autonomous multi-agent task execution system processing over 25M daily inferences with <38ms P99 latency.",
-      "Fine-tuned and quantized Llama 3 & Mistral open-weights models down to 4-bit AWQ/GGUF, reducing cloud inference costs by 62%.",
-      "Designed a fault-tolerant vector retrieval pipeline (pgvector + Qdrant) scaling across 15M+ enterprise technical documents.",
-      "Mentored a team of 6 engineers across model evaluation, continuous batching, and ML telemetry observability.",
+      "Engineered production-ready front-end web applications with modern component architecture and reactive state management.",
+      "Integrated RESTful APIs and asynchronous data flows, optimizing rendering speed and eliminating render bottlenecks.",
+      "Conducted thorough cross-browser validation, responsive UI testing, and component debugging.",
+      "Collaborated using Git version control, structured branch workflows, and engineering reviews.",
     ],
-    technologies: ["PyTorch", "vLLM", "LangChain", "TensorRT", "Kubernetes", "Ray", "Python", "Docker"],
+    technologies: ["React", "JavaScript", "HTML5", "CSS3", "REST APIs", "Git", "Bootstrap"],
   },
   {
-    id: "sr-ml-dev",
-    role: "Senior AI / Full-Stack Engineer",
-    company: "Cognitive Nexus Technologies",
-    location: "San Francisco, CA / Remote",
-    period: "2022 — 2024",
-    badge: "PRODUCTION IMPACT",
+    id: "trinetra-lead",
+    role: "Lead Systems Developer & Vision Researcher",
+    company: "Trinetra: Offline Spatial Perception Engine",
+    location: "Varanasi, UP / On-Device",
+    period: "AUG 2025 — PRESENT",
+    badge: "FLAGSHIP AI SHIPMENT",
     overview:
-      "Architected end-to-end full-stack AI applications, streaming LLM interfaces, and computer vision edge processing workflows.",
+      "Engineered a local-first, zero-cloud computer vision perception assistant designed for offline environmental spatial understanding and obstacle safety assistance.",
     achievements: [
-      "Built real-time streaming conversational studio supporting WebRTC audio duplex and streaming code diff generation.",
-      "Optimized zero-shot computer vision inference on NVIDIA Jetson embedded hardware, achieving 120 FPS on RTSP video feeds.",
-      "Integrated CI/CD evaluation testbeds evaluating model hallucination rates, BLEU scores, and semantic faithfulness.",
-      "Authored high-throughput async FastAPI microservices handling 5,000+ RPS sustained traffic with zero downtime.",
+      "Trained and deployed YOLO-based real-time object detection models with optimized ONNX inference pipelines for sub-28ms edge speed.",
+      "Integrated Depth Anything V2 and ARCore Depth capabilities for 3D depth perception and spatial obstacle estimation.",
+      "Built real-time frame processing pipelines handling object tracking, motion vector analysis, and collision risk detection.",
+      "Architected fully privacy-preserving local runtime requiring zero external cloud dependencies or server latency.",
     ],
-    technologies: ["Next.js 15", "FastAPI", "OpenCV", "CUDA", "Redis", "TypeScript", "Tailwind CSS"],
+    technologies: ["Python", "YOLO", "Depth Anything V2", "ONNX", "ARCore", "OpenCV", "CameraX"],
   },
   {
-    id: "applied-ml-eng",
-    role: "Applied Deep Learning Engineer",
-    company: "Visionary Dynamics Lab",
-    location: "Toronto, ON",
-    period: "2020 — 2022",
-    badge: "RESEARCH & DEV",
+    id: "ai-agent-planner",
+    role: "Autonomous Multi-Agent Architect",
+    company: "AI Agent Travel Planning & Reasoning Suite",
+    location: "Autonomous Project",
+    period: "EARLY 2026",
+    badge: "LANGGRAPH AGENTIC RAG",
     overview:
-      "Developed custom convolutional and transformer-based architectures for feature extraction, anomaly detection, and automated tabular forecasting.",
+      "Architected an end-to-end multi-agent workflow leveraging LangGraph DAG orchestration and LangChain to automate complex travel planning and constraint satisfaction.",
     achievements: [
-      "Trained custom vision transformers (ViT) achieving 94.6% top-1 accuracy on complex industrial defect classification.",
-      "Constructed automated feature engineering pipelines in PySpark and Polars handling multi-terabyte dataset preprocessing.",
-      "Published technical benchmarks and collaborated with research teams on state-of-the-art self-supervised representations.",
+      "Constructed cyclical agent state-machines in LangGraph handling user intent parsing, budget constraints, and dynamic rescheduling.",
+      "Integrated PostgreSQL database with robust schema definitions to ensure persistent agent memory and context state across sessions.",
+      "Developed high-speed asynchronous FastAPI microservice backend exposing structured JSON travel payloads.",
+      "Implemented validation guardrails and error-handling checkpoints preventing hallucination and dead-end loops in reasoning graphs.",
     ],
-    technologies: ["PyTorch", "TensorFlow", "Scikit-Learn", "Polars", "PySpark", "MLflow", "AWS SageMaker"],
+    technologies: ["LangGraph", "LangChain", "FastAPI", "PostgreSQL", "Python", "Pydantic", "REST APIs"],
   },
   {
-    id: "oss-ai",
-    role: "Open Source AI & Core Contributor",
-    company: "Hugging Face & ML Community",
-    location: "Global / Open Source",
-    period: "2021 — PRESENT",
-    badge: "COMMUNITY IMPACT",
+    id: "ml-predictive-suite",
+    role: "Machine Learning & Predictive Engineer",
+    company: "Student ML Suite & Analytical Microservices",
+    location: "Academic & Open Project",
+    period: "LATE 2025",
+    badge: "APPLIED ML & PIPELINES",
     overview:
-      "Active contributor to open-source machine learning tooling, quantization kernels, and agentic framework integrations.",
+      "Developed predictive analytics systems and data pipelines focused on student performance forecasting, exploratory data analysis, and model serving.",
     achievements: [
-      "Contributed performance patches and memory optimizations to open-source inference frameworks and tokenizers.",
-      "Created popular starter templates and benchmarking utilities for local LLM orchestration with 3,500+ GitHub stars.",
-      "Conducted community workshops on fine-tuning strategies, LoRA adapters, and enterprise RAG architecture patterns.",
+      "Engineered automated data preprocessing, outlier detection, and feature transformation pipelines with Pandas and NumPy.",
+      "Trained, tuned, and evaluated multiple supervised ML models using Scikit-learn with rigorous cross-validation and confusion matrix auditing.",
+      "Exposed serialized model pipelines through lightweight FastAPI endpoints for instant scoring and prediction.",
+      "Authored comprehensive technical documentation, model metrics reporting, and reproducible Jupyter analytical workflows.",
     ],
-    technologies: ["Hugging Face", "Transformers", "LoRA", "GGUF", "Git", "Markdown"],
+    technologies: ["Python", "Scikit-Learn", "FastAPI", "Pandas", "NumPy", "Jupyter", "Matplotlib"],
+  },
+  {
+    id: "fullstack-production",
+    role: "Full-Stack Software Engineering",
+    company: "Production Web Applications & Database Systems",
+    location: "Web Development Track",
+    period: "2024 — 2025",
+    badge: "FULL-STACK PRODUCTION",
+    overview:
+      "Built full-stack database-backed web platforms emphasizing clean modular code, responsive interfaces, and relational database integrity.",
+    achievements: [
+      "Developed responsive dynamic web portals utilizing modern HTML, CSS, JavaScript, PHP, and MySQL.",
+      "Designed relational database schemas with foreign key constraints, indexing, and parameterized queries for SQL injection defense.",
+      "Constructed custom REST endpoints and dynamic client-side DOM manipulation without heavy external runtime dependencies.",
+      "Achieved 95+ Google Lighthouse scores across Performance, Accessibility, and Best Practices.",
+    ],
+    technologies: ["JavaScript", "Next.js", "PHP", "MySQL", "HTML5", "CSS3", "Git"],
   },
 ];
 
@@ -100,7 +119,7 @@ export default function ExperienceSection() {
         color: "var(--text-primary)",
         position: "relative",
         overflow: "hidden",
-        padding: "110px 56px 130px 56px",
+        padding: "clamp(60px, 8vw, 110px) clamp(16px, 4vw, 56px) clamp(70px, 9vw, 130px)",
         userSelect: "none",
         transition: "background-color 0.3s ease, color 0.3s ease",
       }}
@@ -181,7 +200,7 @@ export default function ExperienceSection() {
                 textTransform: "uppercase",
               }}
             >
-              // 04. TRACK RECORD &amp; EXPERIENCE
+              // 04. TECHNICAL EXPERIENCE &amp; APPLIED ENGINEERING TRACK
             </span>
           </div>
 
@@ -207,9 +226,9 @@ export default function ExperienceSection() {
                   margin: 0,
                 }}
               >
-                <span style={{ display: "block" }}>CAREER &amp; RESEARCH</span>
+                <span style={{ display: "block" }}>ENGINEERING TRACK &amp;</span>
                 <span style={{ display: "block", color: "var(--text-secondary)" }}>
-                  MILESTONES
+                  PRODUCTION BUILDS
                 </span>
               </h2>
             </div>
@@ -219,12 +238,11 @@ export default function ExperienceSection() {
                 color: "var(--text-muted)",
                 fontSize: "0.95rem",
                 lineHeight: 1.6,
-                maxWidth: "420px",
+                maxWidth: "440px",
                 margin: 0,
               }}
             >
-              Proven engineering leadership taking machine learning research
-              from prototype experimentation to mission-critical enterprise scale.
+              Verified industry front-end internship, flagship on-device computer vision systems (Trinetra), autonomous LangGraph agents, and end-to-end API deployments.
             </p>
           </div>
         </div>
@@ -233,8 +251,8 @@ export default function ExperienceSection() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
-            gap: "32px",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
+            gap: "24px",
             alignItems: "start",
           }}
         >
@@ -261,7 +279,7 @@ export default function ExperienceSection() {
                     border: isSelected
                       ? "1px solid rgba(139, 92, 246, 0.6)"
                       : "1px solid var(--border-subtle)",
-                    padding: "22px 26px",
+                    padding: "clamp(16px, 2.5vw, 22px) clamp(16px, 3vw, 26px)",
                     clipPath:
                       "polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px)",
                     cursor: "pointer",
@@ -334,7 +352,7 @@ export default function ExperienceSection() {
                   </div>
 
                   <h3
-                    className="font-chakra"
+                    className="font-chakra card-heading"
                     style={{
                       fontSize: "1.2rem",
                       fontWeight: 700,
@@ -365,7 +383,7 @@ export default function ExperienceSection() {
               backgroundColor: "var(--bg-card)",
               backdropFilter: "blur(16px)",
               border: "1px solid var(--border-subtle)",
-              padding: "36px",
+              padding: "clamp(20px, 3.5vw, 36px)",
               clipPath:
                 "polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px)",
               boxShadow: "0 15px 40px -10px rgba(0,0,0,0.5)",
@@ -412,7 +430,7 @@ export default function ExperienceSection() {
               </div>
 
               <h3
-                className="font-chakra"
+                className="font-chakra card-heading"
                 style={{
                   fontSize: "1.7rem",
                   fontWeight: 700,

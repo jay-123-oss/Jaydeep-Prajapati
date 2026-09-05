@@ -3,6 +3,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { WaspButton } from "@/components/ui/wasp-button";
 import { useTheme } from "@/context/ThemeContext";
+import HeroNeuralCanvas from "@/components/HeroNeuralCanvas";
+import { soundFX } from "@/utils/soundFX";
 
 export default function HeroSection() {
   const { theme } = useTheme();
@@ -14,15 +16,15 @@ export default function HeroSection() {
 
   // Dynamic portfolio config
   const [config, setConfig] = useState({
-    headline: "MACHINE LEARNING & AI SYSTEMS",
+    headline: "AI/ML SYSTEMS & COMPUTER VISION",
     subheadline:
-      "Architecting high-throughput neural models, autonomous LLM pipelines, and ultra-low-latency distributed inference engines.",
-    cta_text: "EXPLORE MODELS",
-    cta_link: "#skills",
-    stat1_value: "25M+",
-    stat1_label: "Daily Inferences",
-    stat2_value: "< 38ms",
-    stat2_label: "P99 Inference Latency",
+      "B.Tech CSE student & AI developer. Engineering local-first spatial vision (Trinetra), autonomous LangGraph agent pipelines, and high-performance full-stack web applications.",
+    cta_text: "EXPLORE PROJECTS",
+    cta_link: "#projects",
+    stat1_value: "OFFLINE",
+    stat1_label: "LOCAL VISION PERCEPTION",
+    stat2_value: "< 28ms",
+    stat2_label: "ON-DEVICE YOLO INFERENCE",
     video_opacity_dark: 1.0,
     video_opacity_light: 0.9,
   });
@@ -51,7 +53,7 @@ export default function HeroSection() {
     setTunerOpacity(
       isDark
         ? parseFloat(String(config.video_opacity_dark ?? 1.0))
-        : parseFloat(String(config.video_opacity_light ?? 0.9))
+        : parseFloat(String(config.video_opacity_light ?? 1.0))
     );
   }, [isDark, config]);
 
@@ -77,6 +79,7 @@ export default function HeroSection() {
 
   return (
     <section
+      id="hero-section"
       style={{
         width: "100%",
         height: "100vh",
@@ -115,8 +118,8 @@ export default function HeroSection() {
             height: "100%",
             objectFit: "cover",
             opacity: currentOpacity,
-            filter: isDark ? "none" : "brightness(1.05) contrast(0.95)",
-            transition: "opacity 0.2s ease, filter 0.4s ease",
+            filter: "none",
+            transition: "opacity 0.2s ease",
           }}
           src={desktopSrc}
           autoPlay
@@ -141,8 +144,8 @@ export default function HeroSection() {
             height: "100%",
             objectFit: "cover",
             opacity: currentOpacity,
-            filter: isDark ? "none" : "brightness(1.05) contrast(0.95)",
-            transition: "opacity 0.2s ease, filter 0.4s ease",
+            filter: "none",
+            transition: "opacity 0.2s ease",
           }}
           src={mobileSrc}
           autoPlay
@@ -184,7 +187,7 @@ export default function HeroSection() {
                 position: "absolute",
                 inset: 0,
                 background:
-                  "linear-gradient(to right, rgba(248, 250, 252, 0.92) 0%, rgba(248, 250, 252, 0.72) 48%, rgba(248, 250, 252, 0.25) 100%)",
+                  "linear-gradient(to right, rgba(248, 250, 252, 0.45) 0%, rgba(248, 250, 252, 0.15) 35%, transparent 65%)",
                 pointerEvents: "none",
               }}
             />
@@ -193,12 +196,15 @@ export default function HeroSection() {
                 position: "absolute",
                 inset: 0,
                 background:
-                  "linear-gradient(to top, rgba(248, 250, 252, 0.9) 0%, transparent 45%, rgba(248, 250, 252, 0.5) 100%)",
+                  "linear-gradient(to top, rgba(248, 250, 252, 0.25) 0%, transparent 20%, transparent 85%, rgba(248, 250, 252, 0.15) 100%)",
                 pointerEvents: "none",
               }}
             />
           </>
         )}
+
+        {/* Interactive Neural Constellation Particle Canvas */}
+        <HeroNeuralCanvas />
       </div>
 
       {/* ── MAIN HERO BODY (Left-aligned Layout) ── */}
@@ -209,7 +215,7 @@ export default function HeroSection() {
           flex: 1,
           display: "flex",
           alignItems: "center",
-          padding: "120px 56px 40px 56px",
+          padding: "clamp(85px, 12vh, 120px) clamp(16px, 4vw, 56px) clamp(24px, 4vh, 40px)",
           maxWidth: "1480px",
           width: "100%",
           margin: "0 auto",
@@ -254,11 +260,125 @@ export default function HeroSection() {
               "Architecting high-throughput neural models, autonomous LLM pipelines, and ultra-low-latency distributed inference engines."}
           </p>
 
-          {/* Primary Action Button */}
-          <div style={{ marginBottom: "16px" }}>
+          {/* Primary Action Buttons: EXPLORE MODELS + RESUME */}
+          <div style={{ marginBottom: "16px", display: "flex", gap: "12px", flexWrap: "wrap", alignItems: "center" }}>
             <WaspButton href={config.cta_link || "#skills"} variant={isDark ? "dark" : "light"}>
               {config.cta_text || "EXPLORE MODELS"}
             </WaspButton>
+
+            <a
+              href="/Jaydeep_Prajapati_Resume_Strict1Page.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-pixel"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "10px 20px",
+                backgroundColor: isDark ? "rgba(32, 190, 255, 0.12)" : "#E0F2FE",
+                border: isDark ? "1.5px solid #20BEFF" : "1.5px solid #0284C7",
+                color: isDark ? "#38BDF8" : "#0369A1",
+                fontSize: "11px",
+                fontWeight: 800,
+                letterSpacing: "0.1em",
+                textDecoration: "none",
+                textTransform: "uppercase",
+                boxShadow: isDark ? "0 0 16px rgba(32, 190, 255, 0.25)" : "0 2px 10px rgba(2, 132, 199, 0.15)",
+                transition: "all 0.2s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = isDark ? "#20BEFF" : "#0284C7";
+                e.currentTarget.style.color = isDark ? "#000000" : "#FFFFFF";
+                e.currentTarget.style.boxShadow = "0 0 24px rgba(32, 190, 255, 0.6)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = isDark ? "rgba(32, 190, 255, 0.12)" : "#E0F2FE";
+                e.currentTarget.style.color = isDark ? "#38BDF8" : "#0369A1";
+                e.currentTarget.style.boxShadow = isDark ? "0 0 16px rgba(32, 190, 255, 0.25)" : "0 2px 10px rgba(2, 132, 199, 0.15)";
+              }}
+            >
+              <span>📄 VIEW RESUME / CV</span>
+              <span>↗</span>
+            </a>
+
+            {/* 3D Cyber ID Badge Trigger */}
+            <button
+              type="button"
+              onClick={() => {
+                soundFX.playClick();
+                window.dispatchEvent(new CustomEvent("open-cyber-id"));
+              }}
+              className="font-pixel"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "10px 18px",
+                backgroundColor: isDark ? "rgba(168, 85, 247, 0.12)" : "#F3E8FF",
+                border: isDark ? "1.5px solid #A855F7" : "1.5px solid #9333EA",
+                color: isDark ? "#C084FC" : "#7E22CE",
+                fontSize: "11px",
+                fontWeight: 800,
+                letterSpacing: "0.1em",
+                cursor: "pointer",
+                textTransform: "uppercase",
+                boxShadow: isDark ? "0 0 16px rgba(168, 85, 247, 0.25)" : "0 2px 10px rgba(147, 51, 234, 0.15)",
+                transition: "all 0.2s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = isDark ? "#A855F7" : "#9333EA";
+                e.currentTarget.style.color = isDark ? "#000000" : "#FFFFFF";
+                e.currentTarget.style.boxShadow = "0 0 24px rgba(168, 85, 247, 0.6)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = isDark ? "rgba(168, 85, 247, 0.12)" : "#F3E8FF";
+                e.currentTarget.style.color = isDark ? "#C084FC" : "#7E22CE";
+                e.currentTarget.style.boxShadow = isDark ? "0 0 16px rgba(168, 85, 247, 0.25)" : "0 2px 10px rgba(147, 51, 234, 0.15)";
+              }}
+            >
+              <span>💳</span>
+              <span>SECURITY BADGE</span>
+            </button>
+
+            {/* Neural Vision Cam Trigger */}
+            <button
+              type="button"
+              onClick={() => {
+                soundFX.playClick();
+                window.dispatchEvent(new CustomEvent("open-neural-vision"));
+              }}
+              className="font-pixel"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "10px 18px",
+                backgroundColor: isDark ? "rgba(16, 185, 129, 0.12)" : "#ECFDF5",
+                border: isDark ? "1.5px solid #10B981" : "1.5px solid #059669",
+                color: isDark ? "#34D399" : "#047857",
+                fontSize: "11px",
+                fontWeight: 800,
+                letterSpacing: "0.1em",
+                cursor: "pointer",
+                textTransform: "uppercase",
+                boxShadow: isDark ? "0 0 16px rgba(16, 185, 129, 0.25)" : "0 2px 10px rgba(5, 150, 105, 0.15)",
+                transition: "all 0.2s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = isDark ? "#10B981" : "#059669";
+                e.currentTarget.style.color = isDark ? "#000000" : "#FFFFFF";
+                e.currentTarget.style.boxShadow = "0 0 24px rgba(16, 185, 129, 0.6)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = isDark ? "rgba(16, 185, 129, 0.12)" : "#ECFDF5";
+                e.currentTarget.style.color = isDark ? "#34D399" : "#047857";
+                e.currentTarget.style.boxShadow = isDark ? "0 0 16px rgba(16, 185, 129, 0.25)" : "0 2px 10px rgba(5, 150, 105, 0.15)";
+              }}
+            >
+              <span>👁️</span>
+              <span>NEURAL CAM</span>
+            </button>
           </div>
         </div>
       </main>
@@ -271,14 +391,16 @@ export default function HeroSection() {
           display: "flex",
           alignItems: "flex-end",
           justifyContent: "space-between",
-          padding: "0 56px 40px 56px",
+          flexWrap: "wrap",
+          gap: "18px",
+          padding: "0 clamp(16px, 4vw, 56px) clamp(20px, 3vh, 40px)",
           maxWidth: "1480px",
           width: "100%",
           margin: "0 auto",
         }}
       >
         {/* Telemetry Stats Group */}
-        <div style={{ display: "flex", alignItems: "center", gap: "48px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "clamp(16px, 3.5vw, 48px)", flexWrap: "wrap" }}>
           {/* Stat 1 */}
           <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
             <svg
@@ -499,6 +621,8 @@ export default function HeroSection() {
 
           {/* Trigger Button */}
           <button
+            type="button"
+            suppressHydrationWarning
             onClick={() => setShowTuner(!showTuner)}
             title="Adjust Background Video Opacity"
             style={{

@@ -26,9 +26,11 @@ export async function initDb() {
       video_opacity_light NUMERIC DEFAULT 0.9,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
-    ALTER TABLE portfolio_config ADD COLUMN IF NOT EXISTS video_opacity_dark NUMERIC DEFAULT 1.0;
-    ALTER TABLE portfolio_config ADD COLUMN IF NOT EXISTS video_opacity_light NUMERIC DEFAULT 0.9;
   `;
+  try {
+    await sql`ALTER TABLE portfolio_config ADD COLUMN IF NOT EXISTS video_opacity_dark NUMERIC DEFAULT 1.0;`;
+    await sql`ALTER TABLE portfolio_config ADD COLUMN IF NOT EXISTS video_opacity_light NUMERIC DEFAULT 0.9;`;
+  } catch {}
 
   await sql`
     CREATE TABLE IF NOT EXISTS skills (
@@ -62,6 +64,12 @@ export async function initDb() {
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
   `;
+  try {
+    await sql`ALTER TABLE projects ADD COLUMN IF NOT EXISTS video_url TEXT;`;
+    await sql`ALTER TABLE projects ADD COLUMN IF NOT EXISTS images JSONB DEFAULT '[]'::jsonb;`;
+    await sql`ALTER TABLE projects ADD COLUMN IF NOT EXISTS linkedin_url TEXT;`;
+    await sql`ALTER TABLE projects ADD COLUMN IF NOT EXISTS users_count TEXT;`;
+  } catch {}
 
   await sql`
     CREATE TABLE IF NOT EXISTS experiences (
@@ -89,6 +97,123 @@ export async function initDb() {
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
   `;
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS project_comments (
+      id VARCHAR(100) PRIMARY KEY,
+      project_id VARCHAR(100) NOT NULL,
+      author_name VARCHAR(150) NOT NULL,
+      author_role VARCHAR(100) DEFAULT 'AI Engineer',
+      content TEXT NOT NULL,
+      likes INT DEFAULT 0,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+  `;
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS social_profiles (
+      id VARCHAR(50) PRIMARY KEY,
+      platform VARCHAR(50) NOT NULL,
+      username VARCHAR(100) NOT NULL,
+      display_name VARCHAR(100) NOT NULL,
+      profile_pic TEXT,
+      verified BOOLEAN DEFAULT true,
+      bio TEXT,
+      external_link TEXT,
+      posts_count VARCHAR(20) DEFAULT '0',
+      followers_count VARCHAR(20) DEFAULT '279',
+      following_count VARCHAR(20) DEFAULT '258',
+      views_30days VARCHAR(100) DEFAULT '762 views in the last 30 days.',
+      music_track VARCHAR(100) DEFAULT 'Jannat B Praak',
+      highlights JSONB DEFAULT '[]'::jsonb,
+      posts JSONB DEFAULT '[]'::jsonb,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+  `;
+
+  // ── Seed social_profiles if empty ──
+  const existingInsta = await sql`SELECT id FROM social_profiles WHERE id = 'instagram'`;
+  if (existingInsta.length === 0) {
+    const defaultHighlights = [
+      { title: "New", isAdd: true },
+      { id: 1, title: "# college", video: "/instagram/reel_1.mp4" },
+      { id: 2, title: "💗", video: "/instagram/reel_2.mp4" },
+      { id: 3, title: "😉", video: "/instagram/reel_3.mp4" },
+      { id: 4, title: "Real diamond 💎", video: "/instagram/reel_4.mp4" },
+      { id: 5, title: "Memories ✨", video: "/instagram/reel_5.mp4" },
+      { id: 6, title: "Vibes 🔥", video: "/instagram/reel_6.mp4" },
+      { id: 7, title: "Friends 🤝", video: "/instagram/reel_7.mp4" },
+      { id: 8, title: "Life 🌟", video: "/instagram/reel_8.mp4" },
+    ];
+    await sql`
+      INSERT INTO social_profiles (
+        id, platform, username, display_name, profile_pic, verified, bio, external_link,
+        posts_count, followers_count, following_count, views_30days, music_track, highlights, posts
+      ) VALUES (
+        'instagram',
+        'instagram',
+        'jaydeep.prajapati_18',
+        'Er. Jaydeep Prajapati',
+        '/instagram/avatar.png',
+        true,
+        'Digital creator\n❤️🚩jay shree Ram 🚩\n🤔A man without EGO , is not a man.\n⚠️ Currently busy turning my dreams into reality.',
+        'www.instagram.com/websetu.32?igsh=MTJwdXI3enBqd...',
+        '0',
+        '279',
+        '258',
+        '762 views in the last 30 days.',
+        'Jannat · B Praak',
+        ${JSON.stringify(defaultHighlights)},
+        '[]'::jsonb
+      )
+    `;
+
+    await sql`
+      INSERT INTO social_profiles (
+        id, platform, username, display_name, profile_pic, verified, bio, external_link,
+        posts_count, followers_count, following_count, views_30days, music_track, highlights, posts
+      ) VALUES (
+        'github',
+        'github',
+        'jay-123-oss',
+        'Er. Jaydeep Prajapati',
+        '/linkedin/avatar.png',
+        true,
+        '💻 Python & Web Developer | 🚀 Learning AI & Automation |\n✨ Sharing code & building projects',
+        '/Jaydeep_Prajapati_Resume_Strict1Page.pdf',
+        '25',
+        '7',
+        '31',
+        '7 followers · 31 following',
+        'Open Source',
+        '[]'::jsonb,
+        '[]'::jsonb
+      )
+    `;
+
+    await sql`
+      INSERT INTO social_profiles (
+        id, platform, username, display_name, profile_pic, verified, bio, external_link,
+        posts_count, followers_count, following_count, views_30days, music_track, highlights, posts
+      ) VALUES (
+        'linkedin',
+        'linkedin',
+        'jaydeep-prajapati-a97988358',
+        'Jaydeep--- (jay) ---Prajapati',
+        '/linkedin/avatar.png',
+        true,
+        'python Devloper | Machine learning |MySQL | MongoDB |Computer vision| web Devloper | Git & Github | Data science | Data analyst | FastApi | Docker | AWS | Gen ai learning.....',
+        'https://www.linkedin.com/in/jaydeep-prajapati-a97988358/',
+        '491',
+        '491',
+        '500+',
+        '30 profile views',
+        'AI Engineering',
+        '[]'::jsonb,
+        '[]'::jsonb
+      )
+    `;
+  }
 
   // ── Seed portfolio_config if empty ──
   const existingConfig = await sql`SELECT id FROM portfolio_config WHERE id = 'main'`;
@@ -410,6 +535,138 @@ export async function initDb() {
         ) VALUES (
           ${e.id}, ${e.role}, ${e.company}, ${e.location}, ${e.period}, ${e.badge}, ${e.overview},
           ${JSON.stringify(e.achievements)}, ${JSON.stringify(e.technologies)}, ${e.sort_order}
+        )
+        ON CONFLICT (id) DO NOTHING;
+      `;
+    }
+  }
+
+  // ── Create social_profiles table ──
+  await sql`
+    CREATE TABLE IF NOT EXISTS social_profiles (
+      id VARCHAR(50) PRIMARY KEY,
+      platform VARCHAR(50) NOT NULL,
+      username VARCHAR(100) NOT NULL,
+      display_name VARCHAR(150) NOT NULL,
+      verified BOOLEAN DEFAULT TRUE,
+      category VARCHAR(100) DEFAULT 'Digital creator',
+      profile_pic TEXT,
+      thought_bubble TEXT DEFAULT 'Make this space yours...',
+      bio_lines JSONB,
+      external_link TEXT,
+      threads_handle VARCHAR(100),
+      music_track VARCHAR(150),
+      posts_count VARCHAR(20) DEFAULT '0',
+      followers_count VARCHAR(20) DEFAULT '279',
+      following_count VARCHAR(20) DEFAULT '258',
+      views_30days VARCHAR(100) DEFAULT '762 views in the last 30 days.',
+      highlights JSONB,
+      empty_title VARCHAR(100) DEFAULT 'Create your first post',
+      empty_subtitle VARCHAR(100) DEFAULT 'Make this space your own.',
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+  `;
+
+  // ── Seed social_profiles if empty ──
+  const existingSocial = await sql`SELECT id FROM social_profiles LIMIT 1`;
+  if (existingSocial.length === 0) {
+    const defaultSocialProfiles = [
+      {
+        id: "instagram",
+        platform: "instagram",
+        username: "jaydeep.prajapati_18",
+        display_name: "Er. Jaydeep Prajapati",
+        verified: true,
+        category: "Digital creator",
+        profile_pic: "/instagram/avatar.png",
+        thought_bubble: "Make this space yours...",
+        bio_lines: [
+          "❤️🚩jay shree Ram 🚩",
+          "🤔A man without EGO , is not a man.",
+          "⚠️ Currently busy turning my dreams into reality.",
+        ],
+        external_link: "www.instagram.com/websetu.32?igsh=MTJwdXI3enBqd...",
+        threads_handle: "jaydeep.prajapati_18",
+        music_track: "Jannat · B Praak",
+        posts_count: "0",
+        followers_count: "279",
+        following_count: "258",
+        views_30days: "762 views in the last 30 days.",
+        highlights: [
+          { title: "New", isAdd: true },
+          { id: 1, title: "# college", video: "/instagram/reel_1.mp4" },
+          { id: 2, title: "💗", video: "/instagram/reel_2.mp4" },
+          { id: 3, title: "😉", video: "/instagram/reel_3.mp4" },
+          { id: 4, title: "Real diamond 💎", video: "/instagram/reel_4.mp4" },
+          { id: 5, title: "Memories ✨", video: "/instagram/reel_5.mp4" },
+          { id: 6, title: "Vibes 🔥", video: "/instagram/reel_6.mp4" },
+          { id: 7, title: "Friends 🤝", video: "/instagram/reel_7.mp4" },
+          { id: 8, title: "Life 🌟", video: "/instagram/reel_8.mp4" },
+        ],
+        empty_title: "Capture and Share the World",
+        empty_subtitle: "Share your photos and videos. When you share, they will show up on your profile.",
+      },
+      {
+        id: "github",
+        platform: "github",
+        username: "jay-123-oss",
+        display_name: "Er. Jaydeep Prajapati",
+        verified: true,
+        category: "Python & Web Developer",
+        profile_pic: "/linkedin/avatar.png",
+        thought_bubble: "Focusing",
+        bio_lines: [
+          "💻 Python & Web Developer | 🚀 Learning AI & Automation |",
+          "✨ Sharing code & building projects",
+        ],
+        external_link: "/Jaydeep_Prajapati_Resume_Strict1Page.pdf",
+        threads_handle: "jay-123-oss",
+        music_track: "Open Source",
+        posts_count: "25",
+        followers_count: "7",
+        following_count: "31",
+        views_30days: "7 followers · 31 following",
+        highlights: [],
+        empty_title: "jay-123-oss / README.md",
+        empty_subtitle: "JAAYDEEP PRAJAPATI",
+      },
+      {
+        id: "linkedin",
+        platform: "linkedin",
+        username: "jaydeep-prajapati-a97988358",
+        display_name: "Jaydeep--- (jay) ---Prajapati",
+        verified: true,
+        category: "python Devloper | Machine learning |MySQL | MongoDB |Computer vision| web Devloper | Git & Github | Data science | Data analyst | FastApi | Docker | AWS | Gen ai learning.....",
+        profile_pic: "/linkedin/avatar.png",
+        thought_bubble: "Verify in 2 minutes",
+        bio_lines: [
+          "python Devloper | Machine learning |MySQL | MongoDB |Computer vision| web Devloper | Git & Github | Data science | Data analyst | FastApi | Docker | AWS | Gen ai learning.....",
+        ],
+        external_link: "https://www.linkedin.com/in/jaydeep-prajapati-a97988358/",
+        threads_handle: "jaydeep-prajapati",
+        music_track: "AI Engineering",
+        posts_count: "491",
+        followers_count: "491",
+        following_count: "500+",
+        views_30days: "30 profile views",
+        highlights: [],
+        empty_title: "Showcase your work with projects",
+        empty_subtitle: "Add one manually or import it from a connected apps. Members with projects receive more views.",
+      },
+    ];
+
+    for (const sp of defaultSocialProfiles) {
+      await sql`
+        INSERT INTO social_profiles (
+          id, platform, username, display_name, verified, category,
+          profile_pic, thought_bubble, bio_lines, external_link,
+          threads_handle, music_track, posts_count, followers_count,
+          following_count, views_30days, highlights, empty_title, empty_subtitle
+        ) VALUES (
+          ${sp.id}, ${sp.platform}, ${sp.username}, ${sp.display_name}, ${sp.verified}, ${sp.category},
+          ${sp.profile_pic}, ${sp.thought_bubble}, ${JSON.stringify(sp.bio_lines)}, ${sp.external_link},
+          ${sp.threads_handle}, ${sp.music_track}, ${sp.posts_count}, ${sp.followers_count},
+          ${sp.following_count}, ${sp.views_30days}, ${JSON.stringify(sp.highlights)}, ${sp.empty_title}, ${sp.empty_subtitle}
         )
         ON CONFLICT (id) DO NOTHING;
       `;
