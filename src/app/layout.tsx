@@ -28,7 +28,7 @@ const slabo = Slabo_13px({
   weight: ["400"],
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://jaydeep-prajapati.vercel.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://jaydeepprajapati.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

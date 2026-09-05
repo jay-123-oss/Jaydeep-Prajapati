@@ -6,4 +6,4 @@ Disallow: /admin/*
 Disallow: /api/*
 
 # Sitemap location
-Sitemap: https://jaydeep-prajapati.vercel.app/sitemap.xml
+Sitemap: https://jaydeepprajapati.vercel.app/sitemap.xml
